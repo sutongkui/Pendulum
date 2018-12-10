@@ -24,7 +24,9 @@ for k=1:N
     %[theta(k+1),omega(k+1)] = SemiEuler(omega(k), theta(k), h, g, L);
     
     plot([0,L*sin(theta(k))], [0, -L*cos(theta(k))]);hold on;
-    plot(L*sin(theta(k)), -L*cos(theta(k)), 'o');
-    pause(0.1);
+    plot(L*sin(theta), -L*cos(theta), 'o');
+    axis([-L-1, L+1, -L-1, L+1]);
+    hold off;
+    pause(0.01);
 end
 
