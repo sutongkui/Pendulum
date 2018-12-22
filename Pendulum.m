@@ -7,26 +7,34 @@
 m=1;
 L=9.81;
 g=9.81;
-theta0=(1/10)*pi;
-omega0=0;
+theta=(1/10)*pi;
+omega=0;
 tf = 20;  %time from 0 to tf
 N = 200;
 h=tf/N;
-theta=zeros(N+1);
-omega=zeros(N+1);
-theta(1)=theta0;
-omega(1)=omega0;
 
+hold off;
+ax=gca;
+scatter(ax,0, 0, 'bo');
+axis(ax,[-L-1, L+1, -L-1, L+1]);
+axis equal;
+hold on;
+title('SemiEuler');
+
+pause;
 % Compute
-for k=1:N
-    [theta(k+1),omega(k+1)] = Euler(omega(k), theta(k), h, g, L);
-    %[theta(k+1),omega(k+1)] = BackEuler(omega(k), theta(k), h, g, L);
-    %[theta(k+1),omega(k+1)] = SemiEuler(omega(k), theta(k), h, g, L);
+while 1
+    %[theta,omega] = Euler(omega, theta, h, g, L);
+    %[theta,omega] = BackEuler(omega, theta, h, g, L);
+    [theta,omega] = SemiEuler(omega, theta, h, g, L);
     
-    plot([0,L*sin(theta(k))], [0, -L*cos(theta(k))]);hold on;
-    plot(L*sin(theta), -L*cos(theta), 'o');
-    axis([-L-1, L+1, -L-1, L+1]);
-    hold off;
+    item1=line(ax,[0,L*sin(theta)], [0, -L*cos(theta)],'Color',[0.2,0.4,1]);
+    item2=scatter(ax,L*sin(theta), -L*cos(theta), 'bo');
+    axis(ax,[-L-1, L+1, -L-1, L+1]);
+    
     pause(0.01);
+    
+    item1.delete;
+    item2.delete;
 end
 
